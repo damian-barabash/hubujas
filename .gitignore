@@ -1,0 +1,5 @@
+node_modules/
+dist/
+.DS_Store
+# original Webflow download kept locally as reference (~220 MB) — not for the repo
+site-src/

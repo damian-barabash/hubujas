@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<!-- Source of /public/assets/og.jpg (1200x630). Regenerate: npm run og -->
+<style>
+  @font-face {
+    font-family: 'Hubijas';
+    src: url('../public/fonts/Fontspring-DEMO-organetto-expbold.otf') format('opentype');
+    font-weight: 700;
+  }
+  @font-face {
+    font-family: 'Hubijas';
+    src: url('../public/fonts/Fontspring-DEMO-organetto-expregular.otf') format('opentype');
+    font-weight: 400;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    background: #050505;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .frame { position: relative; width: 1200px; height: 630px; overflow: hidden; }
+
+  /* soft light behind the portrait */
+  .glow {
+    position: absolute; right: -80px; bottom: -180px;
+    width: 760px; height: 760px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,0,.22) 0%, rgba(255,255,0,.06) 42%, rgba(0,0,0,0) 68%);
+  }
+  .glow-blue {
+    position: absolute; left: -160px; top: -160px;
+    width: 620px; height: 620px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,21,255,.22) 0%, rgba(0,21,255,.05) 45%, rgba(0,0,0,0) 70%);
+  }
+
+  /* faint grid, like the site's technical feel */
+  .grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: linear-gradient(100deg, #000 0%, rgba(0,0,0,.35) 60%, transparent 90%);
+    -webkit-mask-image: linear-gradient(100deg, #000 0%, rgba(0,0,0,.35) 60%, transparent 90%);
+  }
+
+  .portrait {
+    position: absolute; right: 40px; bottom: 0;
+    height: 600px; width: auto;
+    filter: contrast(1.05) saturate(.95) drop-shadow(0 0 60px rgba(0,0,0,.9));
+  }
+  /* fade the very bottom of the cut-out into the background */
+  .portrait-mask {
+    position: absolute; right: 0; bottom: 0; width: 560px; height: 90px;
+    background: linear-gradient(to top, #050505 12%, rgba(5,5,5,0) 100%);
+  }
+
+  .content { position: absolute; left: 74px; top: 140px; width: 640px; }
+
+  .kicker {
+    font-size: 17px; letter-spacing: 6.5px; font-weight: 600;
+    color: rgba(255,255,255,.52); text-transform: uppercase;
+  }
+  .wordmark {
+    font-family: 'Hubijas', 'Helvetica Neue', sans-serif; font-weight: 700;
+    font-size: 76px; line-height: 1; letter-spacing: 1px;
+    color: #fff; margin-top: 26px;
+  }
+  .rule { width: 118px; height: 6px; background: #ffff00; margin: 30px 0 28px; }
+  .tag {
+    font-size: 19px; line-height: 1.8; letter-spacing: 3px; font-weight: 500;
+    color: rgba(255,255,255,.82); text-transform: uppercase;
+  }
+  .tag .dot { color: #ffff00; padding: 0 4px; }
+
+  .domain {
+    position: absolute; left: 74px; bottom: 62px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .domain .url {
+    font-family: 'Hubijas', 'Helvetica Neue', sans-serif; font-weight: 400;
+    font-size: 22px; letter-spacing: 4px; color: #ffff00;
+  }
+  .domain .bar { width: 46px; height: 2px; background: rgba(255,255,255,.3); }
+
+  /* top + bottom hairlines */
+  .edge-top { position: absolute; left: 0; right: 0; top: 0; height: 6px; background: #ffff00; }
+  .edge-bottom { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: rgba(255,255,255,.12); }
+</style>
+</head>
+<body>
+  <div class="frame">
+    <div class="glow-blue"></div>
+    <div class="glow"></div>
+    <div class="grid"></div>
+
+    <img class="portrait" src="../public/assets/Logo.png" alt="">
+    <div class="portrait-mask"></div>
+
+    <div class="content">
+      <div class="kicker">Hubert Jaskólski</div>
+      <div class="wordmark">HUBIJAS</div>
+      <div class="rule"></div>
+      <div class="tag">
+        Produkcja wideo<span class="dot">·</span>Eventy<span class="dot">·</span>Konferansjer<br>
+        Marketing<span class="dot">·</span>Motoryzacja
+      </div>
+    </div>
+
+    <div class="domain">
+      <span class="bar"></span>
+      <span class="url">hubijas.pl</span>
+    </div>
+
+    <div class="edge-top"></div>
+    <div class="edge-bottom"></div>
+  </div>
+</body>
+</html>

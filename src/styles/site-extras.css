@@ -1,0 +1,153 @@
+/* ===== Contact form redesign (overrides on top of webflow.css) =====
+   Site aesthetic kept: black card, white text, Hubijas font labels,
+   yellow #ffff00 / blue #0015ff accents. */
+
+.form-block {
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  width: min(540px, 92vw);
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.86);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 34px 36px 30px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+}
+
+.hub-form-title {
+  color: #fff;
+  font-family: 'Hubijas font', Arial, sans-serif;
+  font-size: 26px;
+  letter-spacing: 4px;
+  margin: 0 0 6px;
+  text-transform: uppercase;
+}
+.hub-form-title::after {
+  content: '';
+  display: block;
+  width: 46px;
+  height: 3px;
+  background: #ffff00;
+  margin-top: 10px;
+}
+
+.form-2 { width: 100%; }
+
+.form-block .field-label,
+.form-block .field-label-2,
+.form-block .field-label-3 {
+  color: #fff;
+  font-size: 13px;
+  letter-spacing: 2px;
+  margin: 16px 0 6px;
+  padding: 0;
+  display: block;
+}
+
+.form-block .text-field-2,
+.form-block .text-field-3,
+.form-block .text-field {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  padding: 12px 14px;
+  height: auto;
+  border-radius: 0;
+  transition: border-color 0.15s, background 0.15s;
+}
+.form-block .text-field { min-height: 110px; resize: vertical; }
+.form-block .text-field-2:focus,
+.form-block .text-field-3:focus,
+.form-block .text-field:focus {
+  border-color: #ffff00;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+
+.form-block .submit-button {
+  width: 100%;
+  margin: 22px 0 0;
+  padding: 14px 0;
+  background: #ffff00;
+  border: 2px solid #ffff00;
+  color: #000;
+  font-size: 15px;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.form-block .submit-button:hover {
+  background: #0015ff;
+  border-color: #0015ff;
+  color: #fff;
+}
+.form-block .submit-button[disabled] { opacity: 0.6; cursor: default; }
+
+.form-block .image-13 {
+  width: 20px;
+  height: 20px;
+  inset: 14px 14px auto auto;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.15s, transform 0.15s;
+  z-index: 2;
+}
+.form-block .image-13:hover { opacity: 1; transform: rotate(90deg); }
+
+.form-block .w-form-done {
+  display: block;
+  background: transparent;
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  padding: 30px 10px 20px;
+}
+.hub-form-done-mark {
+  width: 54px;
+  height: 54px;
+  border: 2px solid #ffff00;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffff00;
+  font-size: 26px;
+  margin: 0 auto 18px;
+}
+.hub-form-err {
+  color: #ff6b6b;
+  font-family: Montserrat, sans-serif;
+  font-size: 13px;
+  margin-top: 12px;
+  min-height: 15px;
+}
+
+@media screen and (max-width: 479px) {
+  .form-block {
+    width: 92vw;
+    padding: 26px 22px 22px;
+    bottom: auto;
+    left: 50%;
+  }
+  .form-block .image-13 { width: 20px; top: 12px; right: 12px; }
+  .form-block .submit-button { width: 100%; margin-left: 0; padding-left: 0; padding-right: 0; }
+}
+
+/* toast strip — a bit more presence, same vibe */
+.text-block-11 {
+  font-size: 15px;
+  letter-spacing: 1px;
+  padding: 14px 22px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* fix over the original: hidden mobile-menu links must not swallow taps on the burger */
+.menu-mob, .menu-mob-1, .menu-mob-2 { pointer-events: none; }
+.menu-mob.hub-menu-open, .menu-mob-1.hub-menu-open, .menu-mob-2.hub-menu-open { pointer-events: auto; }
