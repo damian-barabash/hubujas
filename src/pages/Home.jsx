@@ -3,6 +3,7 @@ import { JA_IMAGES } from '../lib/defaults'
 import { restInsert } from '../lib/supabase'
 import { initIx } from '../engine/ix'
 import { initSliders } from '../engine/slider'
+import Preloader from '../components/Preloader'
 
 // data-w-id pools from the original markup — hover/parallax bindings cycle
 // through them so CMS-added rows get identical interactions.
@@ -31,10 +32,36 @@ const JA_WIDS = [
   '7ae90929-fba3-871c-41b0-8252e67a3d84',
 ]
 
-export function BgVideo({ video, poster, className, children, editKey, ...rest }) {
+export function BgVideo({ video, poster, className, children, editKey, eager = false, ...rest }) {
   const isMp4 = /\.mp4($|\?)/.test(video || '')
+  const wrapRef = useRef(null)
+  const vidRef = useRef(null)
+  // eager videos (hero) load immediately; the rest wait until they approach
+  // the viewport so they don't compete with the hero stream on first load
+  const [armed, setArmed] = useState(eager)
+
+  useEffect(() => {
+    if (armed) return
+    const el = wrapRef.current
+    if (!el || typeof IntersectionObserver === 'undefined') { setArmed(true); return }
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) { setArmed(true); io.disconnect() }
+    }, { rootMargin: '400px 0px' })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [armed, video])
+
+  useEffect(() => {
+    const v = vidRef.current
+    if (!armed || !v) return
+    // sources were just mounted — pick them up and resume autoplay
+    v.load()
+    v.play().catch(() => {})
+  }, [armed, video])
+
   return (
     <div
+      ref={wrapRef}
       className={`${className} w-background-video w-background-video-atom`}
       data-autoplay="true" data-loop="true" data-wf-ignore="true"
       {...(editKey ? { 'data-edit-video': editKey } : {})} {...rest}
@@ -42,11 +69,13 @@ export function BgVideo({ video, poster, className, children, editKey, ...rest }
       <video
         autoPlay loop muted playsInline data-wf-ignore="true" data-object-fit="cover"
         key={video}
-        style={poster ? { backgroundImage: `url("${poster}")` } : undefined}
+        ref={vidRef}
+        preload={eager ? 'auto' : 'none'}
+        style={poster ? { backgroundImage: `url("${poster}")`, backgroundSize: 'cover', backgroundPosition: '50% 50%' } : undefined}
       >
-        {!isMp4 && <source src={video} type="video/webm" data-wf-ignore="true" />}
-        {!isMp4 && <source src={video.replace(/\.webm$/, '.mp4')} type="video/mp4" data-wf-ignore="true" />}
-        {isMp4 && <source src={video} type="video/mp4" data-wf-ignore="true" />}
+        {armed && !isMp4 && <source src={video} type="video/webm" data-wf-ignore="true" />}
+        {armed && !isMp4 && <source src={video.replace(/\.webm$/, '.mp4')} type="video/mp4" data-wf-ignore="true" />}
+        {armed && isMp4 && <source src={video} type="video/mp4" data-wf-ignore="true" />}
       </video>
       {children}
     </div>
@@ -121,6 +150,7 @@ export default function Home({ content, editor = false }) {
 
   return (
     <div ref={rootRef}>
+      {!editor && <Preloader />}
       <div data-collapse="all" data-animation="default" data-duration="400" data-easing="ease"
         data-easing2="ease" role="banner" className="navbar w-nav" />
       <div className="cursor-follower" />
@@ -189,7 +219,7 @@ export default function Home({ content, editor = false }) {
         </div>
         <div data-w-id="5c194141-5666-57a6-f713-008e38ec0309" className="logo"
           data-edit="hero.logo" dangerouslySetInnerHTML={{ __html: t['hero.logo'] }} />
-        <BgVideo editKey="video.hero" video={t['video.hero']} poster={t['poster.hero']} className="background-video"
+        <BgVideo eager editKey="video.hero" video={t['video.hero']} poster={t['poster.hero']} className="background-video"
           data-w-id="98686a2d-ffe7-4280-e408-a48bf901a225" />
         <img src="/assets/arrow.svg" data-w-id="5dc97db0-3f12-f98a-a95c-62ea1d6cbbab" alt="" className="arrow" />
         <div className="wrapper-title" />
