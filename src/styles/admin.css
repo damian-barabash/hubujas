@@ -64,7 +64,8 @@ body.hub-edit .text-block-11.hub-show { display: block !important; opacity: 1 !i
 body.hub-edit .background-video-4 { opacity: 0 !important; }
 body.hub-edit .marquee { animation: none !important; }
 .hub-vid-btn {
-  position: absolute; z-index: 50; bottom: 18px; right: 18px; background: #0015ff; color: #fff;
+  position: absolute; z-index: 50; top: calc(50% + 70px); left: 50%; transform: translateX(-50%);
+  white-space: nowrap; background: #0015ff; color: #fff;
   border: 0; padding: 8px 13px; font-size: 11px; font-weight: 700; letter-spacing: 1px; cursor: pointer;
   font-family: Montserrat, Arial, sans-serif;
 }
